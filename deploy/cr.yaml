@@ -1,9 +1,0 @@
-apiVersion: "flokkr.github.io/v1alpha1"
-kind: "Component"
-metadata:
-  name: "example"
-spec:
-   values:
-      image:
-         repository: "elek/ozone"
-         tag: "latest"

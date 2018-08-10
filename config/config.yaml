@@ -1,3 +1,0 @@
-apiVersion: flokkr.github.io/v1alpha1
-kind: Component
-projectName: flokkr-operator
