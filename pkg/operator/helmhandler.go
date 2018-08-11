@@ -2,7 +2,7 @@ package flokkroperator
 
 import (
 	"os/exec"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"fmt"
 	"github.com/flokkr/flokkr-operator/pkg/api/flokkr/v1alpha1"
 	"bytes"

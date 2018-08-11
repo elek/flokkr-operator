@@ -18,7 +18,7 @@ import (
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	ownapi "github.com/flokkr/flokkr-operator/pkg/api/flokkr/v1alpha1"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"errors"
 )
 
