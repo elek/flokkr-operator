@@ -24,7 +24,7 @@ import (
 
 func Run() {
 
-	ownCli, axeCli, _, err := createKubernetesClients(true);
+	ownCli, axeCli, _, err := createKubernetesClients();
 	if err != nil {
 		panic(err)
 	}

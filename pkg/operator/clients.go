@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-func createKubernetesClients(development bool) (*owncli.FlokkrV1alpha1Client, *apiextensionscli.Clientset, *kubernetes.Clientset, error) {
+func createKubernetesClients() (*owncli.FlokkrV1alpha1Client, *apiextensionscli.Clientset, *kubernetes.Clientset, error) {
 	var err error
 	var cfg *rest.Config
 
@@ -23,8 +23,12 @@ func createKubernetesClients(development bool) (*owncli.FlokkrV1alpha1Client, *a
 	}
 	flag.Parse()
 
-	// use the current context in kubeconfig
-	cfg, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if _, err := os.Stat(*kubeconfig); os.IsNotExist(err) {
+		cfg, err = rest.InClusterConfig()
+	} else {
+		cfg, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	}
+
 	if err != nil {
 		panic(err.Error())
 	}
