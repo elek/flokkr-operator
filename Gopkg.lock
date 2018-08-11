@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/Sirupsen/logrus"
+  packages = ["."]
+  revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
+  version = "v1.0.5"
+
+[[projects]]
   branch = "master"
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
@@ -177,7 +183,6 @@
 [[projects]]
   name = "github.com/spotahome/kooper"
   packages = [
-    "client/crd",
     "log",
     "monitoring/metrics",
     "operator",
@@ -185,8 +190,7 @@
     "operator/controller/leaderelection",
     "operator/handler",
     "operator/resource",
-    "operator/retrieve",
-    "wrapper/time"
+    "operator/retrieve"
   ]
   revision = "3a6cd5e1ead2b941c1427c7e7391631045c19f61"
   version = "v0.4.0"
@@ -431,15 +435,9 @@
   packages = ["pkg/util/proto"]
   revision = "e3762e86a74c878ffed47484592986685639c2cd"
 
-[[projects]]
-  name = "k8s.io/kubernetes"
-  packages = ["pkg/util/version"]
-  revision = "bb9ffb1654d4a729bb4cec18ff088eacc153c239"
-  version = "v1.11.2"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1208e3f81c040955dee6bf61e4e12d843b698eb959a5cf9bd58db1a9e9256193"
+  inputs-digest = "fec4fd3ea86b253ce7e40335e7cb7e57c72c79124a14595793a4892098dfda7b"
   solver-name = "gps-cdcl"
   solver-version = 1
