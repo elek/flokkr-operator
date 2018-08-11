@@ -8,6 +8,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
+	"strings"
 )
 
 type HelmHandler struct {
@@ -43,12 +44,13 @@ func (helm *HelmHandler) Install(component *v1alpha1.Component) error {
 
 }
 func (helm *HelmHandler) Delete(name string) error {
-	logrus.Info("Resource is deleted")
-	_, err := helm.executeAndReturn(fmt.Sprintf("helm delete --purge %s", name))
+	logrus.Infof("Resource is deleted: %s", name)
+	parts := strings.Split(name, "/")
+	helm.lastValues[name] = []byte("deleted")
+	_, err := helm.executeAndReturn(fmt.Sprintf("helm delete --purge %s", parts[1]))
 	if err != nil {
 		return err
 	}
-	helm.lastValues[name] = []byte("deleted")
 	logrus.Infof("Helm delete is executed successfully")
 	return nil
 
