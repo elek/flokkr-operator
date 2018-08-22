@@ -100,10 +100,10 @@ func (crd *ComponentCrd) GetListerWatcher() cache.ListerWatcher {
 	return &cache.ListWatch{
 		ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
 
-			return crd.crdCli.Components("ozoneweekly").List(options);
+			return crd.crdCli.Components("").List(options);
 		},
 		WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
-			return crd.crdCli.Components("ozoneweekly").Watch(options);
+			return crd.crdCli.Components("").Watch(options);
 		},
 	}
 }
