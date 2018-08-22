@@ -23,7 +23,6 @@ func newHelmHandler() HelmHandler {
 
 func (helm *HelmHandler) Install(component *v1alpha1.Component) error {
 
-	logrus.Infof("New resource is detected %s/%s", component.Namespace, component.Name)
 	chartName := "flokkr/" + component.Spec.Type
 
 	out, err := yaml.Marshal(&component.Spec.Values)

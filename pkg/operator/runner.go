@@ -79,13 +79,11 @@ func newComponentHandler(handler *HelmHandler) *ComponentHandler {
 }
 
 func (h *ComponentHandler) Add(_ context.Context, obj runtime.Object) error {
-	logrus.Infof("resource is added")
 	component := obj.(*ownapi.Component)
 	return h.handler.Install(component)
 
 }
 func (h *ComponentHandler) Delete(_ context.Context, name string) error {
-	logrus.Infof("resource is deleted")
 	return h.handler.Delete(name)
 }
 
