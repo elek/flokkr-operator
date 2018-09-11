@@ -20,11 +20,13 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"errors"
+	"bytes"
+	"gopkg.in/yaml.v2"
 )
 
 func Run() {
 
-	ownCli, axeCli, _, err := createKubernetesClients();
+	ownCli, axeCli, k8sCli, err := createKubernetesClients();
 	if err != nil {
 		panic(err)
 	}
@@ -32,10 +34,10 @@ func Run() {
 	// Create crd.
 	crd := newComponentCRD(ownCli, axeCli)
 
-	helmHandler := newHelmHandler()
+	installHandler := newJobHandler(k8sCli)
 
 	// Create handler.
-	handler := newComponentHandler(&helmHandler)
+	handler := newComponentHandler(&installHandler)
 
 	ctrl := controller.NewSequential(30*time.Second, handler, crd, nil, std)
 	signalC := make(chan os.Signal, 1)
@@ -69,22 +71,37 @@ type ComponentCrd struct {
 }
 
 type ComponentHandler struct {
-	handler *HelmHandler
+	handler    *JobHander
+	lastValues map[string][]byte
 }
 
-func newComponentHandler(handler *HelmHandler) *ComponentHandler {
+func newComponentHandler(handler *JobHander) *ComponentHandler {
 	return &ComponentHandler{
-		handler: handler,
+		handler:    handler,
+		lastValues: make(map[string][]byte),
 	}
 }
 
 func (h *ComponentHandler) Add(_ context.Context, obj runtime.Object) error {
 	component := obj.(*ownapi.Component)
-	return h.handler.Install(component)
+	out, err := yaml.Marshal(&component.Spec.Values)
+	if err != nil {
+		return err
+	}
+	if val, ok := h.lastValues[component.Name]; !ok || !bytes.Equal(out, val) {
+		h.lastValues[component.Name] = out
+		return h.handler.Install(component)
+	} else {
+		return nil
+	}
 
 }
 func (h *ComponentHandler) Delete(_ context.Context, name string) error {
-	return h.handler.Delete(name)
+	err := h.handler.Delete(name)
+	if err == nil {
+		h.lastValues[name] = []byte("deleted")
+	}
+	return err;
 }
 
 func newComponentCRD(crdCli *owncli.FlokkrV1alpha1Client, axeCli *apiextensionscli.Clientset) *ComponentCrd {
