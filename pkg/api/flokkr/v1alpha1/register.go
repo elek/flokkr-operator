@@ -1,11 +1,10 @@
 package v1alpha1
 
 import (
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"github.com/flokkr/flokkr-operator/pkg/api/flokkr"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
-
 
 import (
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
@@ -18,10 +17,11 @@ const (
 
 // PodTerminator constants
 const (
-	ComponentKind       = "component"
+	ComponentKind       = "Component"
+	ComponentListKind   = "ComponentList"
 	ComponentName       = "component"
 	ComponentNamePlural = "components"
-	ComponentScope  = apiextensionsv1beta1.ClusterScoped
+	ComponentScope      = apiextensionsv1beta1.NamespaceScoped
 )
 
 // SchemeGroupVersion is group version used to register these objects

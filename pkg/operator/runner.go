@@ -138,8 +138,10 @@ func (crd *ComponentCrd) Initialize() error {
 			Version: ownapi.SchemeGroupVersion.Version,
 			Scope:   ownapi.ComponentScope,
 			Names: apiextensionsv1beta1.CustomResourceDefinitionNames{
-				Plural: ownapi.ComponentNamePlural,
-				Kind:   ownapi.ComponentKind,
+				Singular: ownapi.ComponentName,
+				Plural:   ownapi.ComponentNamePlural,
+				Kind:     ownapi.ComponentKind,
+				ListKind: ownapi.ComponentListKind,
 			},
 		},
 	}
