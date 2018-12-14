@@ -1,0 +1,11 @@
+apiVersion: "flokkr.github.io/v1alpha1"
+kind: "Component"
+metadata:
+  name: "freon"
+spec:
+   type: freon
+   values:
+      image:
+         repository: "flokkr/ozone"
+         tag: "2.1.0-snapshot.626"
+      configmap: "ozoneweekly-config"

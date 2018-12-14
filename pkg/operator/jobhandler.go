@@ -33,7 +33,7 @@ func (handler *JobHander) Install(component *v1alpha1.Component) error {
 func createJob(namespace string, name string, action string) batchv1.Job {
 	job := batchv1.Job{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      fmt.Sprintf("flokkr-%s-%s-%s", action, name, RandStringRunes(5)),
+			Name:      fmt.Sprintf("flokkr-%s-%s-%s-%s", namespace, name, action, RandStringRunes(5)),
 			Namespace: namespace,
 		},
 		Spec: batchv1.JobSpec{
